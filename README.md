@@ -1,3 +1,8 @@
+
+Example commands: 
+python pdfInterrogator.py love.pdf text_prompts.txt
+
+
 # PDF Interrogration Tools
 
 These are a few of my tools that facilitate PDF interrogration with GPT-4. The tools create prompts that can be pasted directly into GPT-4 when using, for example, the AskYourPDF plugin, or into Microsoft Edge, for which the AI assistant is built on GPT-4. In subsequent versions of these tools, the cutting and pasting will be automated (I need API access first). 
