@@ -9,6 +9,10 @@ from openai import OpenAI
 import time
 import sys
 
+if len(sys.argv) != 3: 
+    print("Usage: python pdfInterrogator.py <pdf_filename> <prompts_filename>")
+    sys.exit(1)
+
 client = OpenAI()
 
 # init assistant
