@@ -1,16 +1,21 @@
 """
 Generates answers considering PDF (argv[1]) for each prompt listed in prompts file (argv[2])
+
+Usage: 
+python pdfInterrogator.py <pdf_name> <prompts_file_name>
 """
 
 from openai import OpenAI
 import time
+import sys
 
 client = OpenAI()
 
 # init assistant
 assistant = client.beta.assistants.create(
   name="pdf reader",
-  instructions="Use the uploaded file to provide answer. Do not answer if you couldn't find any context in the knowledge base, just say I don't know",
+  # instructions="Use the uploaded file to provide answer. Do not answer if you couldn't find any context in the knowledge base, just say I don't know",
+  instructions="Use the uploaded file to provide answer. If you can't find a text match within excerpts, use the location specified in parentheses after them",
   tools=[{"type": "code_interpreter"}], 
   model="gpt-4-turbo",
 )
@@ -75,7 +80,7 @@ for i, prompt in enumerate(prompts):
 filtered_answers = [ans[0] for ans in answers]
 
 with open("text_answers.txt", "w") as file:
-    file.write("\n\n".join(filtered_answers))
+    file.write("\n------------\n".join(filtered_answers))
 
 # print(filtered_answers)
 
