@@ -19,7 +19,7 @@ client = OpenAI()
 assistant = client.beta.assistants.create(
   name="pdf reader",
   # instructions="Use the uploaded file to provide answer. Do not answer if you couldn't find any context in the knowledge base, just say I don't know",
-  instructions="Use the uploaded file to provide answer. If you can't find a text match within excerpts, use the location specified in parentheses after them",
+  instructions="Use the uploaded file to provide answer. If you can't find a text match within excerpts, use the location specified in parentheses after them. If asked to put something in the form of a Beamer presentation, use the \\begin{frame} and \\end{frame} commands to begin and end slides, and the \\frametitle{} command to title the slide",
   tools=[{"type": "code_interpreter"}], 
   model="gpt-4-turbo",
 )
