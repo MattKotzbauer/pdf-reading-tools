@@ -84,7 +84,7 @@ for i, prompt in enumerate(prompts):
 filtered_answers = [ans[0] for ans in answers]
 
 with open("text_answers.txt", "w") as file:
-    file.write("\n------------\n".join(filtered_answers))
+    # file.write("\n------------\n".join(filtered_answers))
 
 # print(filtered_answers)
 
