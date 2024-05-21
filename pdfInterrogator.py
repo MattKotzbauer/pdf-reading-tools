@@ -1,3 +1,4 @@
+
 """
 Generates answers considering PDF (argv[1]) for each prompt listed in prompts file (argv[2])
 
@@ -38,34 +39,42 @@ file_streams = [open(path, "rb") for path in file_paths]
 file_batch = client.beta.vector_stores.file_batches.upload_and_poll(
   vector_store_id=vector_store.id, files=file_streams
 )
- 
+
+# print(file_batch.status)
+# print(file_batch.file_counts)
+
 assistant = client.beta.assistants.update(
   assistant_id=assistant.id,
   tool_resources={"file_search": {"vector_store_ids": [vector_store.id]}},
 )
 
 message_file = client.files.create(
-  file = open("./" + pdf_filename, "rb"),
-  purpose = "assistants"
+  file = open("./" + pdf_filename, "rb"), purpose = "assistants"
 )
 
 thread = client.beta.threads.create(
   messages=[
     {
       "role": "user",
-      "content": "Summarize the content of the PDF",
+      "content": "Summarize the content of the biomedical PDF",
       "attachments": [
         { "file_id": message_file.id, "tools": [{"type": "file_search"}] }
       ],
     }
   ]
 )
+
+print(thread.tool_resources.file_search)
  
 run = client.beta.threads.runs.create_and_poll(
     thread_id=thread.id, assistant_id=assistant.id
 )
 
+time.sleep(10)
+
 messages = list(client.beta.threads.messages.list(thread_id=thread.id, run_id=run.id))
+print(messages)
+
 
 message_content = messages[0].content[0].text
 annotations = message_content.annotations
